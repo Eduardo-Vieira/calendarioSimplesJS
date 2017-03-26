@@ -1,0 +1,98 @@
+<style>
+
+.row{
+    width:200px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.strDay{
+    background-color: #008B88;
+    color: #fff;
+    width:100%;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.day{
+    background-color: #20B2AA;
+    color: #fff;
+    font-size: 72px;
+    text-align: center;
+}
+.mesAno{
+    background-color: #20B2AA;
+    color: #fff;
+    font-size: 25px;
+    text-align: center;
+}
+.dayaut{
+    color: #fff;
+    background-color: #20B2AA;
+} 
+</style>
+<script type="text/javascript">
+
+function calendar(date) {
+
+  if(date == null)
+     date = new Date();
+
+  day = date.getDate();
+  dayStr = date.getDay();
+  month = date.getMonth();
+  year = date.getFullYear();
+
+  months = new Array('JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ');
+  
+  arrD = new Array("Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado");
+  
+  arrDc = new Array("D","S","T","Q","Q","S","S");
+  
+  this_month = new Date(year, month, 1);
+  next_month = new Date(year, month + 1, 1);
+
+  first_week_day = this_month.getDay();
+  days_in_this_month = Math.round((next_month.getTime() - this_month.getTime()) / (1000 * 60 * 60 * 24));
+   
+  calendar_html = '<div class="row"><div class="strDay">'+arrD[dayStr]+'</div>';
+  calendar_html += '<div class="day">'+day+'</div>';
+  calendar_html += '<div class="mesAno">' + months[month] + '<br>' + year + '</div>';
+  calendar_html += '<table class="row">';
+  calendar_html += '<tr>';
+  for(d=0;d<7;d++)
+    {
+        calendar_html += '<td>'+arrDc[d]+'</td>';
+    }
+  calendar_html += '</tr>';
+  calendar_html += '<tr>';
+
+  for(week_day = 0; week_day < first_week_day; week_day++) {
+    calendar_html += '<td> </td>';
+  }
+
+  week_day = first_week_day;
+  for(day_counter = 1; day_counter <= days_in_this_month; day_counter++) {
+    week_day %= 7;
+    if(week_day == 0)
+      calendar_html += '</tr><tr>';
+
+    if(day == day_counter)
+      calendar_html += '<td><div class="dayaut">' + day_counter + '</div></td>';
+    else
+      calendar_html += '<td> ' + day_counter + ' </td>';
+
+    week_day++;
+  }
+
+  calendar_html += '</tr>';
+  calendar_html += '</table>';
+  calendar_html += '</div>';
+
+  document.write(calendar_html);
+}
+</script>
+
+<script type="text/javascript">calendar();</script>
+<p><div align="center"></div><p>
+
+
